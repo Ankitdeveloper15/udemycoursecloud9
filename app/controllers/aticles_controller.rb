@@ -7,11 +7,23 @@ class AticlesController < ApplicationController
    end
    
    def create
-      @aticle = Aticle.new(aticle_params)
-      @aticle.save
-      redirect_to aticles_show(@aticle)
       
-   end
+      @aticle = Aticle.new(aticle_params)
+      if @aticle.save
+         
+         flash[:notice] = "Article was created successfully"
+      redirect_to aticle_path(@aticle)
+      
+      else
+         render 'new'
+      end
+    end
+    
+    def show
+       
+       @aticle = Aticle.find(params[:id])
+       
+    end
    
    private
    
