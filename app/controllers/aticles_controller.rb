@@ -12,8 +12,11 @@ class AticlesController < ApplicationController
     end
    
     def create
+        
+        debugge
       
       @aticle = Aticle.new(aticle_params)
+      @aticle.user=User.first
       if @aticle.save
          
          flash[:notice] = "Article was created successfully"
