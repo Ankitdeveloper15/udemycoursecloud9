@@ -2,7 +2,7 @@ class AticlesController < ApplicationController
    
    
     def index
-       @aticles = Aticle.all
+      @aticles = Aticle.paginate(page: params[:page], per_page: 5)
     end
 
     def new
