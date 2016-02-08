@@ -16,7 +16,7 @@ class AticlesController < ApplicationController
         debugge
       
       @aticle = Aticle.new(aticle_params)
-      @aticle.user=User.first
+      @aticle.user=current_user
       if @aticle.save
          
          flash[:notice] = "Article was created successfully"
