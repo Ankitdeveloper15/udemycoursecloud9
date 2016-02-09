@@ -1,5 +1,8 @@
 class AticlesController < ApplicationController
    
+   before_action :set_aticle, only: [:edit, :update, :show, :destroy]
+   before_action :require_user, except: [:index, :show]
+   before_action :require_same_user, only: [:edit, :update, :destroy]
    
     def index
       @aticles = Aticle.paginate(page: params[:page], per_page: 5)
@@ -12,8 +15,6 @@ class AticlesController < ApplicationController
     end
    
     def create
-        
-        debugge
       
       @aticle = Aticle.new(aticle_params)
       @aticle.user=current_user
@@ -29,16 +30,14 @@ class AticlesController < ApplicationController
     
     def show
        
-       @aticle = Aticle.find(params[:id])
-       
     end
     
     def edit
-     @aticle = Aticle.find(params[:id])
+     
     end
     
     def update
-      @aticle = Aticle.find(params[:id])
+     
         if @aticle.update(aticle_params)
          flash[:notice] = "Article was successfully updated"
          redirect_to aticle_path(@aticle)
@@ -48,7 +47,7 @@ class AticlesController < ApplicationController
     end
     
     def destroy
-      @aticle = Aticle.find(params[:id])
+      
       @aticle.destroy
       flash[:notice] = "Article was successfully deleted"
       redirect_to aticles_path
@@ -57,10 +56,20 @@ class AticlesController < ApplicationController
 
     private
     
+    def set_aticle
+     @aticle = Aticle.find(params[:id])
+    end
+    
     def aticle_params
        
        params.require( :aticle).permit(:title, :description)
-       
+    end
+    
+    def require_same_user
+        if current_user != @aticle.user and !current_user.admin?
+         flash[:danger] = "You can only edit or delete your own articles"
+         redirect_to root_path
+        end
     end
     
 end

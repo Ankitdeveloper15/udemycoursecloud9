@@ -20,7 +20,7 @@
 <hr>
 <%= simple_format(@aticle.description) %>
 <div class="article-actions">
-<% if logged_in? && current_user == @aticle.user %>
+<% if logged_in? && (current_user == @aticle.user || current_user.admin?) %>
 <%= link_to "Edit this article", edit_aticle_path(@aticle), class: "btn btn-xs btn-primary" %>
 <%= link_to "Delete this article", aticle_path(@aticle), method: :delete,
 data: { confirm: "Are you sure you want to delete the article?"},
