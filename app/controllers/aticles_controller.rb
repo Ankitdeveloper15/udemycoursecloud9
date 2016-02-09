@@ -20,7 +20,7 @@ class AticlesController < ApplicationController
       @aticle.user=current_user
       if @aticle.save
          
-         flash[:notice] = "Article was created successfully"
+         flash[:success] = "Article was created successfully"
       redirect_to aticle_path(@aticle)
       
       else
@@ -39,7 +39,7 @@ class AticlesController < ApplicationController
     def update
      
         if @aticle.update(aticle_params)
-         flash[:notice] = "Article was successfully updated"
+         flash[:success] = "Article was successfully updated"
          redirect_to aticle_path(@aticle)
         else
          render 'edit'
@@ -49,7 +49,7 @@ class AticlesController < ApplicationController
     def destroy
       
       @aticle.destroy
-      flash[:notice] = "Article was successfully deleted"
+      flash[:danger] = "Article was successfully deleted"
       redirect_to aticles_path
     end
     
